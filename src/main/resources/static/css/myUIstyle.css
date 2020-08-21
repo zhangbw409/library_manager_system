@@ -1,0 +1,115 @@
+.top {
+    margin: 0;
+    padding: 0;
+    height: 70px;
+    background-color: #393D49;
+}
+
+/*垂直导航栏*/
+ul {
+    margin: 0;
+    list-style-type: none; /*移除列表项前小标志*/
+    text-decoration: none;
+    padding: 0;
+    width: 15%;
+    height: 100%;
+    position: fixed;
+    background-color: #333333;
+    overflow: auto;
+}
+
+li a {
+    display: block;
+    color: #fff;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+/* 鼠标移动到选项上修改背景颜色 */
+li a:hover:not(.active) {
+    background-color: #4E5465;
+    color: white;
+}
+
+li a:active {
+    background-color: #99CCCC;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+/*设置子功能背景颜色及字体*/
+.funBackgroungColor {
+    background-color: #333333;
+    font-size: x-small;
+}
+
+/* 下拉按钮样式 */
+.dropbtn {
+    background-color: #555;
+    color: white;
+    padding: 16px;
+    border: none;
+    cursor: pointer;
+    height: 70px;
+}
+
+/* 容器 <div> - 需要定位下拉内容 */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* 下拉内容 (默认隐藏) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+/* 下拉菜单的链接 */
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* 鼠标移上去后修改下拉菜单链接颜色 */
+.dropdown-content a:hover {
+    background-color: #555;
+    color: white;
+}
+
+/* 在鼠标移上去后显示下拉菜单 */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* 当下拉内容显示后修改下拉按钮的背景颜色 */
+.dropdown:hover .dropbtn {
+    background-color: #555;
+}
+
+/*设置表格属性*/
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+table {
+    width: 100%;
+}
+
+td {
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}

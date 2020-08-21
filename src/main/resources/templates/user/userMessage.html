@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>普通用户-图书管理系统</title>
+    <link href="/layui/css/layui.css" rel="stylesheet"/>
+
+</head>
+<body class="layui-layout-body">
+
+<div class="layui-layout layui-layout-admin">
+
+    <div th:include="common/user_header :: header"></div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree">
+
+                <li class="layui-nav-item ">
+                    <a class="" href="javascript:;">借阅管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/userBorrowBookRecord">&emsp;&emsp;借书记录</a></dd>
+                        <dd><a href="/borrowingPage">&emsp;&emsp;借阅书籍</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item">
+                    <a class="" href="javascript:;">书籍管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/userReturnBooksPage">&emsp;&emsp;归还书籍</a></dd>
+                        <dd><a href="/findBookPage">&emsp;&emsp;查询书籍</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed"><a class="" href="/userMessagePage">个人信息</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body layui-container">
+
+        <hr class="layui-bg-blue">
+        <h3 style="font-size: xx-large; text-align: center"> 个 人 信 息 </h3>
+        <hr class="layui-bg-blue">
+
+        <div class="layui-row">
+            <div class="layui-col-md8 layui-col-lg-offset2">
+                <table class="layui-table">
+                    <thead>
+                    <tr>
+                        <th>用户id</th>
+                        <th>用户姓名</th>
+                        <th>用户邮箱</th>
+                        <th>用户密码</th>
+                    </tr>
+                    </thead>
+
+                    <tr>
+                        <td><b th:text="${session.user.getUserId()}"></b></td>
+                        <td><b th:text="${session.user.getUserName()}"></b></td>
+                        <td><b th:text="${session.user.getUserEmail()}"></b></td>
+                        <td><b th:text="${session.user.getUserPwd()}"></b></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="layui-row">
+            <button id="modify-user" class="layui-btn" style="display: block; margin: 10px auto;">修改信息</button>
+        </div>
+
+        <div id="window" title="修改信息" style="margin: 5%; display: none">
+            <form id="updateUserForm" class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">名字</label>
+
+                    <div class="layui-input-block">
+                        <input type="text" name="userName" th:value="${session.user.getUserName()}" id="name"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">邮箱</label>
+
+                    <div class="layui-input-block">
+                        <input type="text" name="UserEmail" th:value="${session.user.getUserEmail()}" id="email"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+
+                    <div class="layui-input-block">
+                        <input type="text" name="userPwd" id="password" class="layui-input"
+                               th:value="${session.user.getUserPwd()}">
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <div th:include="common/footer :: footer"></div>
+
+</div>
+
+
+<script src="/scripts/jquery.min.js"></script>
+<script src="/layui/layui.js"></script>
+<script src="/scripts/user/userMessage.js"></script>
+
+</body>
+</html>

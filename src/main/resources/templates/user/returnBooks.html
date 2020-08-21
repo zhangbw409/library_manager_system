@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>普通用户-图书管理系统</title>
+    <link href="/layui/css/layui.css" rel="stylesheet"/>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+
+    <div th:include="common/user_header :: header"></div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree">
+
+                <li class="layui-nav-item ">
+                    <a class="" href="javascript:;">借阅管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/userBorrowBookRecord">&emsp;&emsp;借书记录</a></dd>
+                        <dd><a href="/borrowingPage">&emsp;&emsp;借阅书籍</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">书籍管理</a>
+                    <dl class="layui-nav-child">
+                        <dd class="layui-this"><a href="/userReturnBooksPage">&emsp;&emsp;归还书籍</a></dd>
+                        <dd><a href="/findBookPage">&emsp;&emsp;查询书籍</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="/userMessagePage">个人信息</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body layui-container">
+
+        <div class="layui-container layui-col-md6 ">
+            <hr class="layui-bg-blue">
+            <h3 style="text-align: center; font-size: xx-large"> 用 户 还 书 </h3>
+            <hr class="layui-bg-blue">
+        </div>
+
+        <div>
+            <input class=" layui-input-block" placeholder="请输入书籍编号" autocomplete="off" autofocus
+                   id="bookId" type="text" name="bookId">
+
+            <button class="layui-btn layui-bg-blue" id="btn1">确认还书</button>
+        </div>
+
+    </div>
+
+    <div th:include="common/footer :: footer"></div>
+
+</div>
+
+<script src="/scripts/jquery.min.js"></script>
+<script src="/layui/layui.js"></script>
+<script src="/scripts/user/returnBook.js"></script>
+
+</body>
+</html>
+
+
+
+

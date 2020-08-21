@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员-图书管理系统</title>
+    <link href="/layui/css/layui.css" rel="stylesheet"/>
+
+</head>
+<div class="layui-layout layui-layout-admin">
+
+    <div th:include="common/admin_header :: header"></div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree">
+
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">书籍管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/addBookPage">&emsp;&emsp;录入新书</a></dd>
+                        <dd class="layui-this"><a href="/addCategoryPage?pageNum=1">&emsp;&emsp;新建类别</a></dd>
+                        <dd><a href="/showBooksPage">&emsp;&emsp;查询书籍</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item ">
+                    <a class="" href="javascript:;">用户管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/showUsersPage?pageNum=1">&emsp;&emsp;查询用户</a></dd>
+                        <dd><a href="/addUserPage">&emsp;&emsp;新增用户</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item ">
+                    <a class="" href="javascript:;">借阅信息</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/allBorrowBooksRecordPage?pageNum=1">&emsp;&emsp;所有记录</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item"><a href="/adminInfoPage">个人信息</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body layui-container">
+
+        <div class="layui-row">
+
+            <div class="layui-col-md4"><!--左半部分-->
+
+                <hr class="layui-bg-blue">
+                <h2 style="text-align:center">新建类别</h2>
+                <hr class="layui-bg-blue">
+
+                <form class="layui-form" id="addBookCategoryForm">
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">类别</label>
+                        <input class="layui-input-inline layui-input" id="categoryName" autocomplete="off"
+                               placeholder="请输入类别名称" type="text" name="categoryName" lay-verify="required">
+                    </div>
+
+                    <input name="pageNum" value="1" style="display: none">
+
+                    <div style="margin-left: 100px">
+                        <input lay-filter="btn_addBookCategory" lay-submit="" id="btn_addBookCategory" type="submit"
+                               class="layui-btn " value="添加类别">
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="layui-col-md6 layui-col-md-offset2 "><!--右半部分-->
+                <hr class="layui-bg-blue">
+                <h2 style="text-align:center">已 有 类 别</h2>
+                <hr class="layui-bg-blue">
+
+                <table class="layui-table" lay-size="sm">
+                    <thead>
+                    <tr>
+                        <th>类别编号</th>
+                        <th>类别名称</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+
+                    <tr th:each="bookCategory:${page.getList()}">
+                        <td><label th:text="${bookCategory.getCategoryId()}"></label></td>
+                        <td><label th:text="${bookCategory.getCategoryName()}"></label></td>
+                        <td>
+                            <button class="layui-btn layui-btn-sm layui-btn-danger btn_deleteCategory"
+                                    th:value="${bookCategory.getCategoryId()}">删除
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3">
+                            <div style="margin: auto; width: 160px;">
+
+                                <a id="prePage" href="/addCategoryPage?pageNum=1"
+                                   th:href="@{/addCategoryPage(pageNum=${page.getPageNum()-1})}">
+                                    <button class="layui-btn layui-btn-sm">上一页</button>
+                                </a>
+                                <label id="lab1" th:text="${page.getPageNum()}"></label>
+
+                                <span>/</span>
+
+                                <label id="lab2" th:text="${page.getPageCount()}"></label>
+                                <a id="nextPage" href="/addCategoryPage?pageNum=2"
+                                   th:href="@{/addCategoryPage(pageNum=${page.getPageNum()+1})}">
+                                    <button class="layui-btn layui-btn-sm">下一页</button>
+                                </a>
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+                <br>
+
+
+            </div>
+
+        </div>
+
+    </div>
+    <div th:include="common/footer :: footer"></div>
+
+</div>
+
+<script src="/scripts/jquery.min.js"></script>
+<script src="/layui/layui.js"></script>
+<script src="/scripts/admin/addBookCategory.js"></script>
+
+</body>
+</html>
+

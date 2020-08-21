@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+    <style>
+
+        body {
+            /*width: 100%;*/
+            /*height: 100%;*/
+            background: url("/images/background.png") no-repeat;
+            /*background: url("static/images/a.png") no-repeat;*/
+            background-size: cover;
+        }
+
+        #login_form {
+            width: 400px;
+            height: 400px;
+            margin: 80px auto;
+            padding: 30px;
+            background-color: #f2f2f2;
+            opacity: 0.9;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="wrapper">
+    <div class="layui-container" id="login_form">
+
+        <div>
+            <h1 style="color: red">图书管理系统</h1>
+            <br>
+            <h2>用户登录</h2>
+            <br>
+        </div>
+
+        <form class="layui-form" id="my_form" method="post" action="/userLogin">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="userName" id="username" autofocus
+                           placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">密 码:</label>
+                <div class="layui-input-block">
+                    <input type="password" name="password" id="password"
+                           placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户身份</label>
+                <div class="layui-input-block">
+                    <input class="form-check-input" type="radio" name="role" value="1" title="学生" checked>
+                    <input class="form-check-input" type="radio" name="role" value="0" title="管理员">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-col-md4 layui-col-md-offset4">
+                <button id="sub_btn" class="layui-btn layui-btn-normal">登录</button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+
+<script th:src="@{/scripts/jquery.min.js}"></script>
+<script th:src="@{/layui/layui.js}"></script>
+
+
+<script th:inline="javascript">
+    layui.use(['layer', 'form'], function () {
+        let layer = layui.layer;
+        let form = layui.form;
+        form.render();
+
+        $(function () {
+            let flag = [[${session.flag}]];
+            if (flag) {
+                layer.msg("用户名或密码错误", {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            }
+        });
+    });
+
+
+    $("#sub_btn").click(function () {
+        let username = $("#username").val();
+        let user_judge = check(username);
+
+        // 首先判断用户名是否为空 
+        if (user_judge) {
+            let password = $("#password").val();
+            let pwd_judge = check(password);
+
+            // 用户名不为空  , 判断密码是否为空
+            if (pwd_judge) {
+                let role_id = $('input[name="role"]:checked').val();
+
+                // 如果role_id ==1 ,则是普通用户 , 直接提交表单
+                if (role_id == 1) {
+                    $("#my_form").submit();
+                } else {
+
+                    //如果是管理员 , 则将action 进行更改 
+                    $("#my_form").attr("action", "/adminLogin")
+                    $("#my_form").submit();
+                }
+
+            } else {
+                layer.alert("密码不能为空", {icon: 5});
+                return false;
+            }
+        } else {
+
+            layer.alert("用户名不能为空", {icon: 5});
+            return false;
+        }
+    });
+
+    // 校验表单中用户名 与 密码是否输入,  如果有值 -> 返回 true , 如果未输入 返回 false;
+    function check(val) {
+        val = val.toString().trim();
+        return !(val == '');
+    }
+
+</script>
+</body>
+</html>

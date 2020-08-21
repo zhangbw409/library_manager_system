@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>普通用户-图书管理系统</title>
+    <link href="/layui/css/layui.css" rel="stylesheet"/>
+
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+
+    <div th:include="common/user_header :: header"></div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree">
+
+                <li class="layui-nav-item ">
+                    <a class="" href="javascript:;">借阅管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/userBorrowBookRecord">&emsp;&emsp;借书记录</a></dd>
+                        <dd><a href="/borrowingPage">&emsp;&emsp;借阅书籍</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item ">
+                    <a class="" href="javascript:;">书籍管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/userReturnBooksPage">&emsp;&emsp;归还书籍</a></dd>
+                        <dd><a href="/findBookPage">&emsp;&emsp;查询书籍</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="/userMessagePage">个人信息</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body layui-container">
+        <div class="layui-carousel layui-container" id="index" style="margin-top: 40px;">
+            <div carousel-item>
+                <div><img src="/images/lib1.jpg"/></div>
+                <div><img src="/images/lib2.jpg"/></div>
+                <div><img src="/images/lib3.jpg"/></div>
+                <div><img src="/images/lib4.jpg"/></div>
+                <div><img src="/images/lib5.jpg"/></div>
+            </div>
+        </div>
+    </div>
+
+    <div th:include="common/footer :: footer"></div>
+
+</div>
+
+<script src="/scripts/jquery.min.js"></script>
+<script src="/layui/layui.js"></script>
+<script>
+
+    layui.use(['carousel', 'element'], function () {
+        let carousel = layui.carousel;
+        let element = layui.element;
+        //建造实例
+        carousel.render({
+            elem: '#index'
+            , width: '900' //设置容器宽度
+            , height: '550px' //设置容器高度
+            // , full:'true' //是否全屏轮播,默认false
+            // , arrow: 'always' //始终显示箭头和点击按钮
+            // ,anim: 'updown' //切换动画方式，可从各个方向滚动
+        });
+    });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.zbw.domain
+
+# 默认是8080端口 , 配置为80端口在浏览器访问时不需要输入端口号
+server:
+  port: 80
+
+spring:
+  # 用户名 密码 需要根据实际情况修改
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    password: 123456
+    url: jdbc:mysql://localhost:3306/library-manager-system?useUnicode=true&serverTimezone=UTC&characterEncoding=utf-8&useSSL=false
+    username: root
+  mvc:
+    view:
+      prefix: classpath:/templates/
+      suffix: .html
+  resources:
+    chain:
+      cache: true

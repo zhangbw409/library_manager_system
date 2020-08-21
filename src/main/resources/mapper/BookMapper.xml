@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zbw.mapper.BookMapper">
+    <resultMap id="BaseResultMap" type="com.zbw.domain.Book">
+        <id column="book_id" jdbcType="INTEGER" property="bookId"/>
+        <result column="book_name" jdbcType="VARCHAR" property="bookName"/>
+        <result column="book_author" jdbcType="VARCHAR" property="bookAuthor"/>
+        <result column="book_publish" jdbcType="VARCHAR" property="bookPublish"/>
+        <result column="book_category" jdbcType="INTEGER" property="bookCategory"/>
+        <result column="book_price" jdbcType="DOUBLE" property="bookPrice"/>
+        <result column="book_introduction" jdbcType="VARCHAR" property="bookIntroduction"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        book_id, book_name, book_author, book_publish, book_category, book_price, book_introduction
+    </sql>
+
+    <select id="selectByExample" parameterType="com.zbw.domain.BookExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from book
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectBooksByPartInfo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from book
+        where book_name LIKE #{bookPartInfo}
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from book
+        where book_id = #{bookId,jdbcType=INTEGER}
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from book
+        where book_id = #{bookId,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.zbw.domain.BookExample">
+        delete from book
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.zbw.domain.Book">
+        insert into book (book_id, book_name, book_author,
+                          book_publish, book_category, book_price,
+                          book_introduction)
+        values (#{bookId,jdbcType=INTEGER}, #{bookName,jdbcType=VARCHAR}, #{bookAuthor,jdbcType=VARCHAR},
+                #{bookPublish,jdbcType=VARCHAR}, #{bookCategory,jdbcType=INTEGER}, #{bookPrice,jdbcType=DOUBLE},
+                #{bookIntroduction,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.zbw.domain.Book">
+        insert into book
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bookId != null">
+                book_id,
+            </if>
+            <if test="bookName != null">
+                book_name,
+            </if>
+            <if test="bookAuthor != null">
+                book_author,
+            </if>
+            <if test="bookPublish != null">
+                book_publish,
+            </if>
+            <if test="bookCategory != null">
+                book_category,
+            </if>
+            <if test="bookPrice != null">
+                book_price,
+            </if>
+            <if test="bookIntroduction != null">
+                book_introduction,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bookId != null">
+                #{bookId,jdbcType=INTEGER},
+            </if>
+            <if test="bookName != null">
+                #{bookName,jdbcType=VARCHAR},
+            </if>
+            <if test="bookAuthor != null">
+                #{bookAuthor,jdbcType=VARCHAR},
+            </if>
+            <if test="bookPublish != null">
+                #{bookPublish,jdbcType=VARCHAR},
+            </if>
+            <if test="bookCategory != null">
+                #{bookCategory,jdbcType=INTEGER},
+            </if>
+            <if test="bookPrice != null">
+                #{bookPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="bookIntroduction != null">
+                #{bookIntroduction,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.zbw.domain.BookExample" resultType="java.lang.Long">
+        select count(*) from book
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update book
+        <set>
+            <if test="record.bookId != null">
+                book_id = #{record.bookId,jdbcType=INTEGER},
+            </if>
+            <if test="record.bookName != null">
+                book_name = #{record.bookName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.bookAuthor != null">
+                book_author = #{record.bookAuthor,jdbcType=VARCHAR},
+            </if>
+            <if test="record.bookPublish != null">
+                book_publish = #{record.bookPublish,jdbcType=VARCHAR},
+            </if>
+            <if test="record.bookCategory != null">
+                book_category = #{record.bookCategory,jdbcType=INTEGER},
+            </if>
+            <if test="record.bookPrice != null">
+                book_price = #{record.bookPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="record.bookIntroduction != null">
+                book_introduction = #{record.bookIntroduction,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update book
+        set book_id = #{record.bookId,jdbcType=INTEGER},
+        book_name = #{record.bookName,jdbcType=VARCHAR},
+        book_author = #{record.bookAuthor,jdbcType=VARCHAR},
+        book_publish = #{record.bookPublish,jdbcType=VARCHAR},
+        book_category = #{record.bookCategory,jdbcType=INTEGER},
+        book_price = #{record.bookPrice,jdbcType=DOUBLE},
+        book_introduction = #{record.bookIntroduction,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zbw.domain.Book">
+        update book
+        <set>
+            <if test="bookName != null">
+                book_name = #{bookName,jdbcType=VARCHAR},
+            </if>
+            <if test="bookAuthor != null">
+                book_author = #{bookAuthor,jdbcType=VARCHAR},
+            </if>
+            <if test="bookPublish != null">
+                book_publish = #{bookPublish,jdbcType=VARCHAR},
+            </if>
+            <if test="bookCategory != null">
+                book_category = #{bookCategory,jdbcType=INTEGER},
+            </if>
+            <if test="bookPrice != null">
+                book_price = #{bookPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="bookIntroduction != null">
+                book_introduction = #{bookIntroduction,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where book_id = #{bookId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zbw.domain.Book">
+        update book
+        set book_name         = #{bookName,jdbcType=VARCHAR},
+            book_author       = #{bookAuthor,jdbcType=VARCHAR},
+            book_publish      = #{bookPublish,jdbcType=VARCHAR},
+            book_category     = #{bookCategory,jdbcType=INTEGER},
+            book_price        = #{bookPrice,jdbcType=DOUBLE},
+            book_introduction = #{bookIntroduction,jdbcType=VARCHAR}
+        where book_id = #{bookId,jdbcType=INTEGER}
+    </update>
+
+    <!-- 根据书籍类别 分页查找-->
+    <select id="selectByCategoryId" resultMap="BaseResultMap">
+        select *
+        from book
+        where book_category = #{categoryId}
+        limit #{currIndex},#{pageSize}
+    </select>
+
+    <select id="selectBookCountByCategoryId" resultType="Integer">
+        select count(*)
+        from book
+        where book_category = #{categoryId}
+    </select>
+</mapper>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员-图书管理系统</title>
+    <link href="/layui/css/layui.css" rel="stylesheet"/>
+
+</head>
+<div class="layui-layout layui-layout-admin">
+
+    <div th:include="common/admin_header :: header"></div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree">
+
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">书籍管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/addBookPage">&emsp;&emsp;录入新书</a></dd>
+                        <dd><a href="/addCategoryPage?pageNum=1">&emsp;&emsp;新建类别</a></dd>
+                        <dd class="layui-this"><a href="/showBooksPage">&emsp;&emsp;查询书籍</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item ">
+                    <a class="" href="javascript:;">用户管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/showUsersPage?pageNum=1">&emsp;&emsp;查询用户</a></dd>
+                        <dd><a href="/addUserPage">&emsp;&emsp;新增用户</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item ">
+                    <a class="" href="javascript:;">借阅信息</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/allBorrowBooksRecordPage?pageNum=1">&emsp;&emsp;所有记录</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item"><a href="/adminInfoPage">个人信息</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body layui-container">
+
+        <div class="layui-row">
+
+            <div class="layui-col-md3"><!--左半部分-->
+
+                <hr class="layui-bg-blue">
+                <h2 style="text-align:center">查询书籍</h2>
+                <hr class="layui-bg-blue">
+
+                <form class="layui-form" action="/showBooksResultPageByCategoryId" id="bookCategoryForm">
+
+                    <div class="layui-form-item">
+
+                        <div style="margin: 20px;">
+                            <label>按类别查找</label>
+                        </div>
+
+                        <div>
+                            <select lay-verify="required" class="layui-select" id="bookCategory" name="bookCategory">
+                            </select>
+                        </div>
+                    </div>
+
+                    <input type="text" name="pageNum" value="1" style="display: none">
+
+                    <input class="layui-btn" type="submit" lay-submit="" value="查找">
+                </form>
+            </div>
+
+            <div class="layui-col-md7 layui-col-md-offset2"><!--右半部分-->
+
+                <hr class="layui-bg-blue">
+                <h2 style="text-align:center">查询结果</h2>
+                <hr class="layui-bg-blue">
+
+
+                <table class="layui-table" lay-size="sm">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>书名</th>
+                        <th>作者</th>
+                        <th>出版社</th>
+                        <th>状态</th>
+                    </tr>
+                    </thead>
+
+                    <tr th:each="book:${page.getList()}">
+                        <td><label th:text="${book.getBookId()}"></label></td>
+                        <td><label th:text="${book.getBookName()}"></label></td>
+                        <td><label th:text="${book.getBookAuthor()}"></label></td>
+                        <td><label th:text="${book.getBookPublish()}"></label></td>
+                        <td><label th:text="${book.getIsExist()}"></label></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="5">
+                            <div style="margin: auto; width: 160px;">
+
+                                <a id="prePage"
+                                   th:href="@{/showBooksResultPageByCategoryId(pageNum=${page.getPageNum()-1},bookCategory=${bookCategory})}">
+                                    <button class="layui-btn layui-btn-sm">上一页</button>
+                                </a>
+                                <label id="lab1" th:text="${page.getPageNum()}"></label>
+
+                                <span>/</span>
+
+                                <label id="lab2" th:text="${page.getPageCount()}"></label>
+                                <a id="nextPage"
+                                   th:href="@{/showBooksResultPageByCategoryId(pageNum=${page.getPageNum()+1},bookCategory=${bookCategory})}">
+                                    <button class="layui-btn layui-btn-sm">下一页</button>
+                                </a>
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div th:include="common/footer :: footer"></div>
+
+</div>
+
+<script src="/scripts/jquery.min.js"></script>
+<script src="/layui/layui.js"></script>
+<script src="/scripts/admin/showBooks.js"></script>
+
+</body>
+</html>
+
+

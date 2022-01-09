@@ -1,6 +1,6 @@
 layui.use(['form','element','layer'], function () {
     let form = layui.form;
-    let element = layui.element();
+    let element = layui.element;
     let layer = layui.layer;
 
     form.on('submit(btn_addBookCategory)', function (data) {
